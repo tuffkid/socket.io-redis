@@ -111,7 +111,7 @@ function adapter(uri, opts){
 
   Redis.prototype.broadcast = function(packet, opts, remote){
     Adapter.prototype.broadcast.call(this, packet, opts);
-    if (!remote) pub.publish(key, JSON.stringfy([packet, opts]));
+    if (!remote) pub.publish(key, JSON.stringify([packet, opts]));
   };
 
   return Redis;
