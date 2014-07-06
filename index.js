@@ -90,7 +90,7 @@ function adapter(uri, opts){
   Redis.prototype.onmessage = function(pattern, channel, msg){
     var pieces = channel.split('#');
     if (uid == pieces.pop()) return debug('ignore same uid');
-    var args = msgpack.decode(msg);
+    var args = JSON.parse(msg);
 
     if (args[0] && args[0].nsp === undefined)
       args[0].nsp = '/'
@@ -111,7 +111,7 @@ function adapter(uri, opts){
 
   Redis.prototype.broadcast = function(packet, opts, remote){
     Adapter.prototype.broadcast.call(this, packet, opts);
-    if (!remote) pub.publish(key, msgpack.encode([packet, opts]));
+    if (!remote) pub.publish(key, JSON.stringfy([packet, opts]));
   };
 
   return Redis;
